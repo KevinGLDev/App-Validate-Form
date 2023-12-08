@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validar datos 2 </title>
+   
+
+    <style>
+     .burbuja {
+	position: relative;
+	background: #bd9400;
+	border-radius: .4em;
+}
+
+.burbuja:after {
+	content: '';
+	position: absolute;
+	left: 5%;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 5px solid transparent;
+	border-right-color: #bd9400;
+	border-left: 0;
+	margin-top: -4px;
+	margin-left: -14px;
+}
+    </style>
+</head>
+
+<body>
+    <form action="algo.html" method="get" id="form">
+        <h1>Datos personales</h1>
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" placeholder="Nombre" title="Escribe el nombre" required autofocus
+            onblur="validar(1)"><span class="burbuja" id="nom">*</span><br><br>
+
+        <label for="apepat">Apellido paterno:</label>
+        <input type="text" name="apellidopat" id="apellidopat" placeholder="Apellido paterno"
+            title="Escribe tu apellido paterno" required onblur="validar(2)"><span id="apepat">*</span><br><br>
+
+        <label for="apemat">Apellido materno:</label>
+        <input type="text" name="apellidomat" id="apellidomat" placeholder="Apellido materno"
+            title="Escribe tu apellido materno"><br><br>
+
+        <label for="semestre">Semestre</label><input type="number" name="semestre" id="semestre" min="1" max="13"
+            required title="Indica el semestre" onblur="validar(3)"><span id="sem">*</span><br><br>
+
+        <label for="correoE">Correo</label><input type="email" name="correoE" id="correo" required
+            onblur="validar(4)"><span id="cor">*</span><br><br>
+
+        <label for="passw">Contraseña</label> <input type="password" name="password" id="password" minlength="6"
+            maxlength="10" onblur="validar(5)" required><span id="pass">*</span> <br><br>
+
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Borrar">
+
+    </form>
+</body>
+
+<script type="text/javascript">
+    window.addEventListener("load",()=>{
+        let form = document.querySelector("#form")
+        form.reset();
+    });
+    
+    let formulario = document.querySelector("#formulario1");
+    function validar(op) {
+        let validacion;
+        switch (op) {
+            case 1:
+                let nombre = document.querySelector("#nombre");
+                validacion = nombre.validity;
+                console.log(validacion);
+                if (validacion.valueMissing) {
+                    nombre.setCustomValidity("El nombre no debe estar vacio");
+                    document.querySelector("#nom").innerHTML = nombre.validationMessage;
+                    document.querySelector("#nom").classList.add("burbuja")
+
+                } else if (!isNaN(parseInt(nombre.value))) {
+                    nombre.setCustomValidity("El nombre no debe contener números");
+                    document.querySelector("#nom").innerHTML = nombre.validationMessage;
+                    document.querySelector("#nom").classList.add("burbuja")
+
+
+                } else {
+                    document.querySelector("#nom").innerHTML = '*';
+                    document.querySelector("#nom").style.color = "black"
+                }
+                break;
+            case 2:
+                let apellido = document.querySelector("#apellidopat");
+                validacion = apellidopat.validity;
+                console.log(validacion);
+                if (validacion.valueMissing) {
+                    apellidopat.setCustomValidity("El apellido paterno no debe estar vacio");
+                    document.querySelector("#apepat").innerHTML = apellidopat.validationMessage;
+                    document.querySelector("#apepat").classList.add("burbuja")
+
+                } else if (!isNaN(parseInt(apellidopat.value))) {
+                    apellidopat.setCustomValidity("El apellido paterno no debe contener números");
+                    document.querySelector("#apepat").innerHTML = apellidopat.validationMessage;
+                    document.querySelector("#apepat").classList.add("burbuja")
+
+                } else {
+                    document.querySelector("#apepat").innerHTML = '*';
+                    document.querySelector("#apepat").style.color = "black"
+                }
+                break;
+            case 3:
+                let semestre = document.querySelector("#semestre");
+                validacion = semestre.validity;
+                console.log(validacion);
+                if (validacion.valueMissing) {
+                    semestre.setCustomValidity("ingrese un numero de semestre");
+                    document.querySelector("#sem").innerHTML = semestre.validationMessage;
+                    document.querySelector("#sem").classList.add("burbuja")
+
+                } else if (validacion.badInput) {
+                    semestre.setCustomValidity("El semestre debe ser representado por un numero");
+                    document.querySelector("#sem").innerHTML = semestre.validationMessage;
+                    document.querySelector("#sem").style.color = "red"
+
+
+                } else if (validacion.rangeUnderflow || validacion.rangeOverflow) {
+                    semestre.setCustomValidity("Ingrese un semestre dentro del rango del 1 al 13");
+                    document.querySelector("#sem").innerHTML = semestre.validationMessage;
+                    document.querySelector("#sem").classList.add("burbuja")
+
+                } else {
+                    document.querySelector("#sem").innerHTML = '*';
+                    document.querySelector("#sem").style.color = "black"
+
+                }
+
+                break;
+
+            case 4:
+                let correo = document.querySelector("#correo");
+                validacion = correo.validity;
+                console.log(validacion);
+                if (validacion.valueMissing) {
+                    correo.setCustomValidity("Correo electronico es necesario");
+                    document.querySelector("#cor").innerHTML = correo.validationMessage;
+                    document.querySelector("#cor").classList.add("burbuja")
+
+                } else if (validacion.typeMismatch) {
+                    correo.setCustomValidity("ingrese un correo valido");
+                    document.querySelector("#cor").innerHTML = correo.validationMessage;
+                    document.querySelector("#cor").classList.add("burbuja")
+
+
+                } else {
+                    document.querySelector("#cor").innerHTML = '*';
+                    document.querySelector("#cor").style.color = "black"
+                }
+
+
+                break;
+
+            case 5:
+                let contraseña = document.querySelector("#password");
+                validacion = contraseña.validity;
+                if (validacion.valueMissing) {
+                    contraseña.setCustomValidity("Ingrese una contraseña");
+                    document.querySelector("#pass").innerHTML = contraseña.validationMessage;
+                    console.log(contraseña.validationMessage);
+                    document.querySelector("#pass").classList.add("burbuja")
+
+                } else if (validacion.tooLong || validacion.tooShort) {
+                    contraseña.setCustomValidity("Ingrese una contraseña entre 6 o 10 caracteres");
+                    document.querySelector("#pass").innerHTML = contraseña.validationMessage;
+                    document.querySelector("#pass").classList.add("burbuja")
+                } else {
+                    document.querySelector("#pass").innerHTML = '*';
+                    document.querySelector("#pass").style.color = "black"
+                }
+                break;
+        }
+    }
+
+</script>
+
+</html>
